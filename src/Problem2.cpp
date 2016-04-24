@@ -70,7 +70,9 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-
+int p[100];
+int counter = 0;
+void inorder(struct node* root);
 int is_identical(struct node_dll *head, struct node *root)
 {
 
@@ -103,13 +105,10 @@ int is_identical(struct node_dll *head, struct node *root)
 		j++;
 	}
 	int flag = j;
-	
-	 j = 0;
-	array = (int*)malloc(100 * sizeof(int));
-	 n = 1;
-	i = 0;
-	list[0] = root;
-	
+	inorder(root);
+	int flag1 = counter;
+	if (flag1 != flag)
+		return 0;
 	for (i = 0; i < flag1 - 1; i++)
 	{
 		for (j = 0; j < flag1 - i - 2; j++)
@@ -123,12 +122,18 @@ int is_identical(struct node_dll *head, struct node *root)
 			}
 		}
 	}
-	for (i = 0; i < flag; i++)
+	for (i = 0; i < counter; i++)
 	{
-		if (a[i] != array[i])
+		if (a[i] != p[i])
 			return -1;
 	}
 	return 1;
+}
+void inorder(struct node* root)
+{
+	inorder(root->left);
+	p[counter] = root->data;
+	inorder(root->right);
 }
 /*here my idea is to collect data from dll and finding inorder of bst and  
  compare them if there is a mismatch i wil return -1 if there is no mismatch i will return 1*/
