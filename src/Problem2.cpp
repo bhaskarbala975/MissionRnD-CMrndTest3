@@ -71,6 +71,64 @@ struct node{
 	struct node *right;
 };
 
-int is_identical(struct node_dll *head, struct node *root){
+int is_identical(struct node_dll *head, struct node *root)
+{
+
+	if (head==NULL||root==NULL)
 	return -1;
+	int i=0;
+	int *a;
+	int *array;
+	int j = 0;
+	a = (int*)malloc(100 * sizeof(int));
+	node * list[100];
+	int n = 1;
+	i = 0;
+	list[0] = root;
+	while (i < n)
+	{
+		node *curnode = list[i];
+		if (curnode->right) {
+			list[n++] = curnode->right;
+		}
+		if (curnode->left) {
+			list[n++] = curnode->left;
+		}
+		i++;
+	}
+
+	for (int i = 0; i < n; i++) {
+		node *presentnode = list[i];
+		a[j] = presentnode->data;
+		j++;
+	}
+	int flag = j;
+	
+	 j = 0;
+	array = (int*)malloc(100 * sizeof(int));
+	 n = 1;
+	i = 0;
+	list[0] = root;
+	
+	for (i = 0; i < flag1 - 1; i++)
+	{
+		for (j = 0; j < flag1 - i - 2; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				int t;
+				t = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = t;
+			}
+		}
+	}
+	for (i = 0; i < flag; i++)
+	{
+		if (a[i] != array[i])
+			return -1;
+	}
+	return 1;
 }
+/*here my idea is to collect data from dll and finding inorder of bst and  
+ compare them if there is a mismatch i wil return -1 if there is no mismatch i will return 1*/

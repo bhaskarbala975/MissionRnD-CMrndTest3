@@ -43,7 +43,6 @@ Difficulty : Easy
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
 struct node{
 	int data;
 	struct node *left;
@@ -51,6 +50,41 @@ struct node{
 };
 
 
-int get_missing_value(struct node *root,int n){
-    return -1;
+int get_missing_value(struct node *root, int n)
+{
+	if (n == 0 || root == NULL)
+		return -1;
+	int i , array[100000], i1 = 0, n1 = 1,j1=0;
+	for (i = 1; i <= n; i++)
+		array[i] = i;
+	int a[100];
+	int j = 0;
+	node * list[100];
+	 i = 0;
+	list[0] = root;
+	while (i < n1) {
+		node *curnode = list[i];
+		if (curnode->right) {
+			list[n1++] = curnode->right;
+		}
+		if (curnode->left) {
+			list[n1++] = curnode->left;
+		}
+		i++;
+	}
+	for (int i = 0; i < n1; i++)
+	{
+		
+		a[j] = list[i]->data;
+		j++;
+	}
+	for (i = 1; i <= n; i++)
+	{
+		for (j1 = 0; j1 < j; j1++)
+			if (array[i] == a[j1])
+				array[i] = -12;
+	}
+	for (i = 1; i <= n; i++)
+		if (array[i] != -12)
+			return array[i];
 }
