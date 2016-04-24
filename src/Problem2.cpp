@@ -70,70 +70,48 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-int p[100];
-int counter = 0;
+int p[100], p1[100];
+int counter = 0, counter2 = 0;
 void inorder(struct node* root);
+void inorder1(struct node_dll* root);
 int is_identical(struct node_dll *head, struct node *root)
 {
 
 	if (head==NULL||root==NULL)
 	return -1;
-	int i=0;
-	int *a;
-	int *array;
-	int j = 0;
-	a = (int*)malloc(100 * sizeof(int));
-	node * list[100];
-	int n = 1;
-	i = 0;
-	list[0] = root;
-	while (i < n)
-	{
-		node *curnode = list[i];
-		if (curnode->right) {
-			list[n++] = curnode->right;
-		}
-		if (curnode->left) {
-			list[n++] = curnode->left;
-		}
-		i++;
-	}
-
-	for (int i = 0; i < n; i++) {
-		node *presentnode = list[i];
-		a[j] = presentnode->data;
-		j++;
-	}
-	int flag = j;
+	inorder1(head);
 	inorder(root);
 	int flag1 = counter;
+	int flag = counter2;
 	if (flag1 != flag)
 		return 0;
-	for (i = 0; i < flag1 - 1; i++)
+	
+	for (int i = 0; i < counter; i++)
 	{
-		for (j = 0; j < flag1 - i - 2; j++)
-		{
-			if (a[j] > a[j + 1])
-			{
-				int t;
-				t = a[j];
-				a[j] = a[j + 1];
-				a[j + 1] = t;
-			}
-		}
-	}
-	for (i = 0; i < counter; i++)
-	{
-		if (a[i] != p[i])
+		if (p1[i] != p[i])
 			return -1;
 	}
 	return 1;
 }
 void inorder(struct node* root)
 {
-	inorder(root->left);
-	p[counter] = root->data;
-	inorder(root->right);
+	if (root != NULL)
+	{
+		inorder(root->left);
+		p[counter] = root->data;
+		inorder(root->right);
+	}
+}
+void inorder1(struct node_dll* head)
+{
+	
+	if (head != NULL)
+	{
+		p1[counter2] = head->data;
+		counter2++;
+		head = head->next;
+		
+	}
 }
 /*here my idea is to collect data from dll and finding inorder of bst and  
  compare them if there is a mismatch i wil return -1 if there is no mismatch i will return 1*/
